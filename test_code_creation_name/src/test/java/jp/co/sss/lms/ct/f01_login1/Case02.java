@@ -9,10 +9,11 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
 
 /**
- * 結合テスト ログイン機能①
- * ケース02
+ * 結合テスト ログイン機能① ケース02
+ *
  * @author holy
  */
 @TestMethodOrder(OrderAnnotation.class)
@@ -40,9 +41,27 @@ public class Case02 {
 
 	@Test
 	@Order(2)
-	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
+	@DisplayName("テスト02 存在しないユーザーでログイン失敗")
 	void test02() {
-		// TODO ここに追加
-	}
+		// 1. 待機時間の設定（Implicit Wait）
 
+		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
+
+		// 2. 遷移と入力・クリック
+		goTo("http://localhost:8080/lms");
+		webDriver.findElement(By.name("loginId")).sendKeys("999999");
+		webDriver.findElement(By.name("password")).sendKeys("password");
+		webDriver.findElement(By.cssSelector("input[value='ログイン']")).click();
+
+		// 3. メッセージ取得（自動待機されるので即座に記述可能）
+		String errorMessage = webDriver.findElement(By.xpath("//span[contains(text(), 'ログインに失敗しました。')]")).getText();
+
+		// 4. 検証
+		org.junit.jupiter.api.Assertions.assertEquals("* ログインに失敗しました。", errorMessage);
+
+		// 5. エビデンス取得
+		getEvidence(new Object() {});
+	}
 }
+
+
