@@ -44,7 +44,6 @@ public class Case02 {
 	@DisplayName("テスト02 存在しないユーザーでログイン失敗")
 	void test02() {
 		// 1. 待機時間の設定（Implicit Wait）
-
 		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
 
 		// 2. 遷移と入力・クリック
@@ -53,7 +52,7 @@ public class Case02 {
 		webDriver.findElement(By.name("password")).sendKeys("password");
 		webDriver.findElement(By.cssSelector("input[value='ログイン']")).click();
 
-		// 3. メッセージ取得（自動待機されるので即座に記述可能）
+		// 3. メッセージ取得
 		String errorMessage = webDriver.findElement(By.xpath("//span[contains(text(), 'ログインに失敗しました。')]")).getText();
 
 		// 4. 検証

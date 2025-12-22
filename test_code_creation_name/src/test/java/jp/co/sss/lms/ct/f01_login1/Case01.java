@@ -42,8 +42,7 @@ public class Case01 {
 
 	    // 2. ログイン画面が表示された状態のスクリーンショットを取得する
 	    // WebDriverUtilsのgetEvidenceメソッドを使用
-	    // これにより "evidence/Case01_test01.png" という名前で保存されます
-	    //getEvidence(new Object(){}.getClass());
+
 	    getEvidence(new Object() {});
 
 	    // 3. 画面が正しく表示されているか検証（アサーション）
