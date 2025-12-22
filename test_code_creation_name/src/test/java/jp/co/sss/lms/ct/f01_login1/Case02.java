@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -37,30 +38,31 @@ public class Case02 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
+		// 待機時間の設定（Implicit Wait）
+		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
+
+		// 遷移
+		goTo("http://localhost:8080/lms");
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 存在しないユーザーでログイン失敗")
 	void test02() {
-		// 1. 待機時間の設定（Implicit Wait）
-		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
 
-		// 2. 遷移と入力・クリック
-		goTo("http://localhost:8080/lms");
+		// 入力・クリック
 		webDriver.findElement(By.name("loginId")).sendKeys("999999");
 		webDriver.findElement(By.name("password")).sendKeys("password");
 		webDriver.findElement(By.cssSelector("input[value='ログイン']")).click();
 
-		// 3. メッセージ取得
+		// メッセージ取得
 		String errorMessage = webDriver.findElement(By.xpath("//span[contains(text(), 'ログインに失敗しました。')]")).getText();
 
-		// 4. 検証
-		org.junit.jupiter.api.Assertions.assertEquals("* ログインに失敗しました。", errorMessage);
+		// 検証
+		assertEquals("* ログインに失敗しました。", errorMessage);
 
-		// 5. エビデンス取得
-		getEvidence(new Object() {});
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 }
-
-

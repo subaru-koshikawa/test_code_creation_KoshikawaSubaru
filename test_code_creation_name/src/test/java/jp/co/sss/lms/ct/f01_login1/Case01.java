@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -44,6 +45,6 @@ public class Case01 {
 
 	    // 3. 画面が正しく表示されているか検証（アサーション）
 	    String actualTitle = webDriver.getTitle();
-	    org.junit.jupiter.api.Assertions.assertEquals("ログイン | LMS", actualTitle, "ログイン画面が表示されていること");
+	    assertEquals("ログイン | LMS", actualTitle, "ログイン画面が表示されていること");
 	}
 }
