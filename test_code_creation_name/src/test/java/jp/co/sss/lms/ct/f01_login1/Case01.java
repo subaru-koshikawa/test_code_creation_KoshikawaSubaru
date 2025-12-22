@@ -37,12 +37,9 @@ public class Case01 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 	    // 1. ブラウザを起動し、ログイン画面（トップページ）にアクセスする
-	    // WebDriverUtilsのgoToメソッドを使用
 	    goTo("http://localhost:8080/lms");
 
 	    // 2. ログイン画面が表示された状態のスクリーンショットを取得する
-	    // WebDriverUtilsのgetEvidenceメソッドを使用
-
 	    getEvidence(new Object() {});
 
 	    // 3. 画面が正しく表示されているか検証（アサーション）
