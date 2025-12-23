@@ -44,6 +44,11 @@ public class Case02 {
 		// 遷移
 		goTo("http://localhost:8080/lms");
 
+		// 画面が正しく表示されているか検証（アサーション）
+		String actualTitle = webDriver.getTitle();
+		assertEquals("ログイン | LMS", actualTitle, "ログイン画面が表示されていること");
+
+		// エビデンス取得
 		getEvidence(new Object() {
 		});
 	}
