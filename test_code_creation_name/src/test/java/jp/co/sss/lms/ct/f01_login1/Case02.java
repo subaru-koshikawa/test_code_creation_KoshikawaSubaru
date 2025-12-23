@@ -43,6 +43,9 @@ public class Case02 {
 
 		// 遷移
 		goTo("http://localhost:8080/lms");
+
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
