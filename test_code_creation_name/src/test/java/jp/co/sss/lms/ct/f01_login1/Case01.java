@@ -12,14 +12,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 /**
- * 結合テスト ログイン機能①
- * ケース01
+ * 結合テスト ログイン機能① ケース01
+ *
  * @author holy
  */
 @TestMethodOrder(OrderAnnotation.class)
 @DisplayName("ケース01 ログイン画面への遷移")
 public class Case01 {
-
 
 	/** 前処理 */
 	@BeforeAll
@@ -37,14 +36,18 @@ public class Case01 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-	    // 1. ブラウザを起動し、ログイン画面（トップページ）にアクセスする
-	    goTo("http://localhost:8080/lms");
+		// 待機時間の設定（Implicit Wait）
+		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
 
-	    // 2. ログイン画面が表示された状態のスクリーンショットを取得する
-	    getEvidence(new Object() {});
+		// 遷移
+		goTo("http://localhost:8080/lms");
 
-	    // 3. 画面が正しく表示されているか検証（アサーション）
-	    String actualTitle = webDriver.getTitle();
-	    assertEquals("ログイン | LMS", actualTitle, "ログイン画面が表示されていること");
+		// 画面が正しく表示されているか検証（アサーション）
+		String actualTitle = webDriver.getTitle();
+		assertEquals("ログイン | LMS", actualTitle, "ログイン画面が表示されていること");
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 }
