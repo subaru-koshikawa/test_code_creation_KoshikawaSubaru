@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト よくある質問機能 ケース04
@@ -58,10 +59,16 @@ public class Case04 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
-		// 入力・クリック
-		webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
-		webDriver.findElement(By.name("password")).sendKeys("StudentBB01");
-		webDriver.findElement(By.cssSelector("input[value='ログイン']")).click();
+		// 要素の取得
+		WebElement idInput = webDriver.findElement(By.name("loginId"));
+		WebElement passInput = webDriver.findElement(By.name("password"));
+		WebElement loginBtn = webDriver.findElement(By.cssSelector("input[value='ログイン']"));
+
+		// 操作処理
+		idInput.sendKeys("StudentAA01");
+		passInput.sendKeys("StudentBB01");
+		loginBtn.click();
+
 
 		// 画面が正しく表示されているか検証（アサーション）
 		String actualTitle = webDriver.getTitle();
@@ -77,9 +84,17 @@ public class Case04 {
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
 		// TODO ここに追加
-		// クリック・遷移
-		webDriver.findElement(By.className("dropdown-toggle")).click();
-		webDriver.findElement(By.linkText("ヘルプ")).click();
+		// 要素の取得
+		WebElement menuToggle = webDriver.findElement(By.className("dropdown-toggle"));
+
+		// 操作処理
+		menuToggle.click();
+
+		// 次の要素を取得
+		WebElement helpLink = webDriver.findElement(By.linkText("ヘルプ"));
+
+		// 操作処理
+		helpLink.click();
 
 		// 画面が正しく表示されているか検証（アサーション）
 		String actualTitle = webDriver.getTitle();
@@ -95,8 +110,11 @@ public class Case04 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 		// TODO ここに追加
-		// クリック・遷移
-		webDriver.findElement(By.linkText("よくある質問")).click();
+		// 要素を取得
+		WebElement faqLink = webDriver.findElement(By.linkText("よくある質問"));
+
+		// 操作処理
+		faqLink.click();
 
 		// 別タブへの遷移
 		java.util.List<String> handles = new java.util.ArrayList<>(webDriver.getWindowHandles());

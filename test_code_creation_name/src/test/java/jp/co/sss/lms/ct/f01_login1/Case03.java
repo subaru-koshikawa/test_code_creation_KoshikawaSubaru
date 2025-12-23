@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト ログイン機能① ケース03
@@ -58,10 +59,15 @@ public class Case03 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
-		// 入力・クリック
-		webDriver.findElement(By.name("loginId")).sendKeys("StudentAA01");
-		webDriver.findElement(By.name("password")).sendKeys("StudentBB01");
-		webDriver.findElement(By.cssSelector("input[value='ログイン']")).click();
+		// 要素の取得
+		WebElement idInput = webDriver.findElement(By.name("loginId"));
+		WebElement passInput = webDriver.findElement(By.name("password"));
+		WebElement loginBtn = webDriver.findElement(By.cssSelector("input[value='ログイン']"));
+
+		// 操作処理
+		idInput.sendKeys("StudentAA01");
+		passInput.sendKeys("StudentBB01");
+		loginBtn.click();
 
 		// 画面が正しく表示されているか検証（アサーション）
 		String actualTitle = webDriver.getTitle();
