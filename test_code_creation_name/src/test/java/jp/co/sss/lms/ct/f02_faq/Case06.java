@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f02_faq;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,10 +10,12 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
- * 結合テスト よくある質問機能
- * ケース06
+ * 結合テスト よくある質問機能 ケース06
+ *
  * @author holy
  */
 @TestMethodOrder(OrderAnnotation.class)
@@ -36,6 +39,20 @@ public class Case06 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
+		// 待機時間の設定（Implicit Wait）
+		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
+
+		// 遷移
+		goTo("http://localhost:8080/lms");
+
+		// 画面が正しく表示されているか検証（アサーション）
+		String actualTitle = webDriver.getTitle();
+		assertEquals("ログイン | LMS", actualTitle, "ログイン画面が表示されていること");
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
+
 	}
 
 	@Test
@@ -43,6 +60,24 @@ public class Case06 {
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
 		// TODO ここに追加
+		// 要素の取得
+		WebElement idInput = webDriver.findElement(By.name("loginId"));
+		WebElement passInput = webDriver.findElement(By.name("password"));
+		WebElement loginBtn = webDriver.findElement(By.cssSelector("input[value='ログイン']"));
+
+		// 操作処理
+		idInput.sendKeys("StudentAA01");
+		passInput.sendKeys("StudentBB01");
+		loginBtn.click();
+
+		// 画面が正しく表示されているか検証（アサーション）
+		String actualTitle = webDriver.getTitle();
+		assertEquals("コース詳細 | LMS", actualTitle, "コース詳細画面が表示されていること");
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
+
 	}
 
 	@Test
@@ -50,6 +85,25 @@ public class Case06 {
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
 		// TODO ここに追加
+		// 要素の取得
+		WebElement menuToggle = webDriver.findElement(By.className("dropdown-toggle"));
+
+		// 操作処理
+		menuToggle.click();
+
+		// 次の要素を取得
+		WebElement helpLink = webDriver.findElement(By.linkText("ヘルプ"));
+
+		// 操作処理
+		helpLink.click();
+
+		// 画面が正しく表示されているか検証（アサーション）
+		String actualTitle = webDriver.getTitle();
+		assertEquals("ヘルプ | LMS", actualTitle, "ヘルプ画面が表示されていること");
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
@@ -57,6 +111,24 @@ public class Case06 {
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
 		// TODO ここに追加
+		// 要素取得
+		WebElement faqLink = webDriver.findElement(By.linkText("よくある質問"));
+
+		// 操作処理
+		faqLink.click();
+
+		// 別タブへの遷移
+		java.util.List<String> handles = new java.util.ArrayList<>(webDriver.getWindowHandles());
+		webDriver.switchTo().window(handles.get(1));
+
+		// 画面が正しく表示されているか検証（アサーション）
+		String actualTitle = webDriver.getTitle();
+		assertEquals("よくある質問 | LMS", actualTitle, "よくある質問画面が表示されていること");
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
+
 	}
 
 	@Test
@@ -64,13 +136,76 @@ public class Case06 {
 	@DisplayName("テスト05 カテゴリ検索で該当カテゴリの検索結果だけ表示")
 	void test05() {
 		// TODO ここに追加
+		// 要素取得
+		WebElement categorySelect = webDriver.findElement(By.linkText("【研修関係】"));
+
+		// 操作処理
+		categorySelect.click();
+
+		// タグ要素の取得
+		java.util.List<WebElement> resultList = webDriver.findElements(By.tagName("td"));
+
+		// 検索結果が1件以上あることの確認
+		assertFalse(resultList.isEmpty(), "検索結果が0件です。キーワードに該当するデータが存在しません。");
+
+		// --- 3. ループで全件検証 ---
+		for (WebElement result : resultList) {
+			String text = result.getText();
+
+			// もし一覧のテキスト（質問文）に「研修」が含まれているのか
+			if (!text.isEmpty() && !text.contains("研修")) {
+
+				// 一番下までスクロールする
+				scrollTo("document.body.scrollHeight");
+
+				//  その項目を変数として操作してクリック
+				result.click();
+
+				//  開いた詳細（回答エリア fs18）からテキストを取得
+				WebElement detailArea = webDriver.findElement(By.className("fs18"));
+				text = detailArea.getText();
+			}
+
+			// 最終的な判定：一覧にあるか、詳細にあるかのどちらかで「研修」をチェック
+			if (!text.isEmpty()) {
+				assertTrue(text.contains("研修") || text.contains("受講者"), "一覧にも詳細にもキーワード '研修' が含まれていません。取得内容: " + text);
+			}
+		}
+
+		// エビデンス取得
+		getEvidence(new Object() {
+
+		});
+
 	}
 
 	@Test
 	@Order(6)
 	@DisplayName("テスト06 検索結果の質問をクリックしその回答を表示")
 	void test06() {
-		// TODO ここに追加
-	}
+		// --- 要素取得とカテゴリ選択 ---
+		WebElement categorySelect = webDriver.findElement(By.linkText("【研修関係】"));
+		categorySelect.click();
 
+		// タグ要素の取得
+		java.util.List<WebElement> resultList = webDriver.findElements(By.tagName("td"));
+
+		// 検索結果が1件以上あることの確認
+		assertFalse(resultList.isEmpty(), "検索結果が0件です。キーワードに該当するデータが存在しません。");
+
+		// --- 3. ループで全件検証 ---
+		for (WebElement result : resultList) {
+
+			// 一番下までスクロールする
+			scrollTo("document.body.scrollHeight");
+
+			result.click();
+		}
+
+		// エビデンス取得
+		getEvidence(new Object() {
+
+		});
+
+	}
 }
