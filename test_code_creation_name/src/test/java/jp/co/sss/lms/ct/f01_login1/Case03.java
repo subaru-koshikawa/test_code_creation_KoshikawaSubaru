@@ -39,13 +39,13 @@ public class Case03 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
-		// 待機時間の設定（Implicit Wait）
+		// 待機時間の設定
 		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
 
 		// 遷移
 		goTo("http://localhost:8080/lms");
 
-		// 画面が正しく表示されているか検証（アサーション）
+		// 検証
 		String actualTitle = webDriver.getTitle();
 		assertEquals("ログイン | LMS", actualTitle, "ログイン画面が表示されていること");
 
@@ -69,7 +69,7 @@ public class Case03 {
 		passInput.sendKeys("StudentBB01");
 		loginBtn.click();
 
-		// 画面が正しく表示されているか検証（アサーション）
+		// 検証
 		String actualTitle = webDriver.getTitle();
 		assertEquals("コース詳細 | LMS", actualTitle, "コース詳細画面が表示されていること");
 

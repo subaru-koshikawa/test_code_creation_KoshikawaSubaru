@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト ログイン機能① ケース02
@@ -38,13 +39,13 @@ public class Case02 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		// TODO ここに追加
-		// 待機時間の設定（Implicit Wait）
+		// 待機時間の設定
 		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
 
 		// 遷移
 		goTo("http://localhost:8080/lms");
 
-		// 画面が正しく表示されているか検証（アサーション）
+		// 検証
 		String actualTitle = webDriver.getTitle();
 		assertEquals("ログイン | LMS", actualTitle, "ログイン画面が表示されていること");
 
@@ -58,12 +59,17 @@ public class Case02 {
 	@DisplayName("テスト02 存在しないユーザーでログイン失敗")
 	void test02() {
 
-		// 入力・クリック
-		webDriver.findElement(By.name("loginId")).sendKeys("999999");
-		webDriver.findElement(By.name("password")).sendKeys("password");
-		webDriver.findElement(By.cssSelector("input[value='ログイン']")).click();
+		// 要素取得
+		WebElement idInput = webDriver.findElement(By.name("loginId"));
+		WebElement passInput = webDriver.findElement(By.name("password"));
+		WebElement loginBtn = webDriver.findElement(By.cssSelector("input[value='ログイン']"));
 
-		// メッセージ取得
+		// 操作処理
+		idInput.sendKeys("999999");
+		passInput.sendKeys("password");
+		loginBtn.click();
+
+		// 要素取得
 		String errorMessage = webDriver.findElement(By.xpath("//span[contains(text(), 'ログインに失敗しました。')]")).getText();
 
 		// 検証
