@@ -38,7 +38,6 @@ public class Case04 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
 		// 待機時間の設定
 		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
 
@@ -58,7 +57,6 @@ public class Case04 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
 		// 要素取得
 		WebElement idInput = webDriver.findElement(By.name("loginId"));
 		WebElement passInput = webDriver.findElement(By.name("password"));
@@ -82,7 +80,6 @@ public class Case04 {
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-		// TODO ここに追加
 		// 要素取得
 		WebElement menuToggle = webDriver.findElement(By.className("dropdown-toggle"));
 
@@ -108,7 +105,6 @@ public class Case04 {
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
-		// TODO ここに追加
 		// 要素取得
 		WebElement faqLink = webDriver.findElement(By.linkText("よくある質問"));
 

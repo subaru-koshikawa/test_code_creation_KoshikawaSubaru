@@ -57,7 +57,6 @@ public class Case05 {
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
 		// 要素取得
 		WebElement idInput = webDriver.findElement(By.name("loginId"));
 		WebElement passInput = webDriver.findElement(By.name("password"));
@@ -81,7 +80,6 @@ public class Case05 {
 	@Order(3)
 	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-		// TODO ここに追加
 		// 要素取得
 		WebElement menuToggle = webDriver.findElement(By.className("dropdown-toggle"));
 
@@ -107,7 +105,6 @@ public class Case05 {
 	@Order(4)
 	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
 	void test04() {
-		// TODO ここに追加
 		// 要素取得
 		WebElement faqLink = webDriver.findElement(By.linkText("よくある質問"));
 
@@ -132,7 +129,6 @@ public class Case05 {
 	@Order(5)
 	@DisplayName("テスト05 キーワード検索で該当キーワードを含む検索結果だけ表示")
 	void test05() {
-		// TODO ここに追加;
 		// 要素取得
 		WebElement keywordInput = webDriver.findElement(By.name("keyword"));
 		WebElement searchBtn = webDriver.findElement(By.cssSelector("input[value='検索']"));
@@ -172,7 +168,6 @@ public class Case05 {
 	@Order(6)
 	@DisplayName("テスト06 「クリア」ボタン押下で入力したキーワードを消去")
 	void test06() {
-		// TODO ここに追加
 		// スクロール
 		scrollTo("0");
 

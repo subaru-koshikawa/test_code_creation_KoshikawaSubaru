@@ -38,7 +38,6 @@ public class Case02 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
 		// 待機時間の設定
 		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
 
@@ -58,7 +57,6 @@ public class Case02 {
 	@Order(2)
 	@DisplayName("テスト02 存在しないユーザーでログイン失敗")
 	void test02() {
-
 		// 要素取得
 		WebElement idInput = webDriver.findElement(By.name("loginId"));
 		WebElement passInput = webDriver.findElement(By.name("password"));
