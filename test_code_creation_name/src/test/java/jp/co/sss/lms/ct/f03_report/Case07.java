@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f03_report;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,10 +10,12 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
- * 結合テスト レポート機能
- * ケース07
+ * 結合テスト レポート機能 ケース07
+ *
  * @author holy
  */
 @TestMethodOrder(OrderAnnotation.class)
@@ -35,35 +38,114 @@ public class Case07 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+		// 待機時間の設定
+		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
+
+		// 遷移
+		goTo("http://localhost:8080/lms");
+
+		// 検証
+		String actualTitle = webDriver.getTitle();
+		assertEquals("ログイン | LMS", actualTitle, "ログイン画面が表示されていること");
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 初回ログイン済みの受講生ユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
+		// 要素取得
+		WebElement idInput = webDriver.findElement(By.name("loginId"));
+		WebElement passInput = webDriver.findElement(By.name("password"));
+		WebElement loginBtn = webDriver.findElement(By.cssSelector("input[value='ログイン']"));
+
+		// 操作処理
+		idInput.sendKeys("StudentAA01");
+		passInput.sendKeys("StudentBB01");
+		loginBtn.click();
+
+		// 検証
+		String actualTitle = webDriver.getTitle();
+		assertEquals("コース詳細 | LMS", actualTitle, "コース詳細画面が表示されていること");
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(3)
 	@DisplayName("テスト03 未提出の研修日の「詳細」ボタンを押下しセクション詳細画面に遷移")
 	void test03() {
-		// TODO ここに追加
+		// 要素取得
+		WebElement sectionBtn = webDriver.findElement(By.xpath("//form[input[@value='3']]//input[@value='詳細']"));
+
+		// 操作処理(クリック・メッセージ送信）
+		sectionBtn.click();
+
+		// 待機時間の設定
+		webDriver.manage().timeouts().implicitlyWait(java.time.Duration.ofSeconds(5));
+
+		// 検証
+		String actualTitle = webDriver.getTitle();
+		assertEquals("セクション詳細 | LMS", actualTitle, "セクション詳細画面が表示されていること");
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
+
 	}
 
 	@Test
 	@Order(4)
 	@DisplayName("テスト04 「提出する」ボタンを押下しレポート登録画面に遷移")
 	void test04() {
-		// TODO ここに追加
+		// 要素取得
+		WebElement sendBtn = webDriver.findElement(By.cssSelector("input[type='submit'][value*='提出']"));
+
+		// 操作処理
+		sendBtn.click();
+
+		// 検証
+		String actualTitle = webDriver.getTitle();
+		assertEquals("レポート登録 | LMS", actualTitle, "レポート登録画面が表示されていること");
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(5)
 	@DisplayName("テスト05 報告内容を入力して「提出する」ボタンを押下し確認ボタン名が更新される")
 	void test05() {
-		// TODO ここに追加
+		// 要素取得
+		WebElement textarea = webDriver.findElement(By.id("content_0"));
+		WebElement submitBtn = webDriver.findElement(By.cssSelector("button.btn.btn-primary[type='submit']"));
+
+		// 操作処理
+		textarea.clear();
+		textarea.sendKeys("Javaについて学ぶことができました。");
+		submitBtn.click();
+
+		// 検証
+		String actualTitle = webDriver.getTitle();
+		assertEquals("セクション詳細 | LMS", actualTitle, "セクション詳細画面が表示されていること");
+
+		// 要素取得
+		WebElement sendBtn = webDriver.findElement( By.cssSelector("input.btn.btn-default[type='submit']"));
+		String actualValue = sendBtn.getAttribute("value");
+		String expectedValue = "提出済み日報【デモ】を確認する";
+
+		// 検証
+		assertEquals(expectedValue, actualValue);
+
+		// エビデンス取得
+		getEvidence(new Object() {
+		});
 	}
 
 }
